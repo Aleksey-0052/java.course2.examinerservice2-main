@@ -16,7 +16,10 @@ public class ExaminerServiceImpl implements ExaminerService {
     private final QuestionService mathQuestionService;
 
     @Autowired
-    public ExaminerServiceImpl(@Qualifier("javaQuestionService") QuestionService javaQuestionService, @Qualifier("mathQuestionService") QuestionService mathQuestionService) {
+    public ExaminerServiceImpl(
+            @Qualifier("javaQuestionService") QuestionService javaQuestionService,
+            @Qualifier("mathQuestionService") QuestionService mathQuestionService
+    ) {
 
         this.javaQuestionService = javaQuestionService;
         this.mathQuestionService = mathQuestionService;

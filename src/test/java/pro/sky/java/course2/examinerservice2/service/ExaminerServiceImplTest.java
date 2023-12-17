@@ -1,5 +1,6 @@
 package pro.sky.java.course2.examinerservice2.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,9 +20,20 @@ import static pro.sky.java.course2.examinerservice2.constants.QuestionsConstants
 class ExaminerServiceImplTest {
 
     @Mock
-    private  QuestionService serviceMock;
-    @InjectMocks
+    private  JavaQuestionService serviceMock;
+    @Mock
+    private MathQuestionService serviceMock2;
+
+
+
     private ExaminerServiceImpl out;
+
+    @BeforeEach
+    public void setUp() {
+
+        out = new ExaminerServiceImpl(serviceMock, serviceMock2);
+
+    }
 
     @Test
     public void testGetQuestionsByAmount_AmountEqualsSize_Success() {
@@ -29,13 +41,16 @@ class ExaminerServiceImplTest {
         int amount = 15;
 
         when(serviceMock.getAll())
-                .thenReturn(ALL_QUESTIONS);
+                .thenReturn(ALL_JAVA_QUESTIONS);
+
+        when(serviceMock2.getAll())
+                .thenReturn(ALL_MATH_QUESTIONS);
 
         Collection<Question> actual = out.getQuestions(amount);
 
         assertEquals(amount, actual.size());
         assertEquals(ALL_QUESTIONS, actual);
-        //verify(serviceMock, times(1)).getAll();       // Вызывается 2 раза
+        verify(serviceMock, times(1)).getAll();       // Вызывается 2 раза
 
     }
 
